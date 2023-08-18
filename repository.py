@@ -1,6 +1,10 @@
 from pprint import pprint
 import sqlite3
 
+from flask_sqlalchemy import SQLAlchemy
+
+from models import Items, Types
+
 
 class ItemsRepository():
     item_list = []
@@ -50,5 +54,20 @@ class SQLItemRepository():
 
         self.connection.commit()
         
+class ORMItemRepository():
 
+    def __init__(self, db: SQLAlchemy):
+        self.db = db
 
+    def get_all_items(self):
+        items = Items.query.all()
+        return items
+    
+    def add_item(self, item):
+        new_item = Items(title=item["title"], price=item["price"])
+        
+        types = Types.query.filter(Types.title.in_(item["type"]))
+        new_item.type = list(types)
+
+        self.db.session.add(new_item)
+        self.db.session.commit()
