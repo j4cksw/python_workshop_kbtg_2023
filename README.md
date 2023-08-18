@@ -9,3 +9,12 @@ InteractiveShell.ast_node_interactivity = "all"
 ## REST API guidelines
 https://github.com/microsoft/api-guidelines
 
+## Activate virtual environment
+Windows
+```
+env\Scripts\activate
+```
+Mac
+```
+source env/bin/activate
+```
