@@ -1,7 +1,7 @@
 from pprint import pprint
 from flask import Flask, request
 from exclude_vat import exclude_vat
-from repository import ItemsRepository
+from repository import ItemsRepository, SQLItemRepository
 
 app = Flask(__name__)
 
@@ -9,7 +9,8 @@ app = Flask(__name__)
 def hello_world():
     return "Hello world"
 
-item_reposotry = ItemsRepository()
+#item_reposotry = ItemsRepository()
+item_reposotry = SQLItemRepository()
 
 @app.route("/items", methods=["PUT"])
 def add_item():
