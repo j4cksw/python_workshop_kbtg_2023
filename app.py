@@ -5,6 +5,8 @@ from repository import ItemsRepository, SQLItemRepository
 
 app = Flask(__name__)
 
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+
 @app.route("/")
 def hello_world():
     return "Hello world"
