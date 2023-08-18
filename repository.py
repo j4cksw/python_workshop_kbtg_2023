@@ -39,6 +39,15 @@ class SQLItemRepository():
         cursor = self.connection.cursor()
         cursor.execute("INSERT INTO ITEMS (title, price) VALUES (?, ?)", 
                        (item["title"], item["price"]))
+        item_id = cursor.lastrowid
+        
+        types = cursor.execute("SELECT * FROM TYPES WHERE title IN ('book')").fetchall()
+        
+        for type in types:
+            cursor.execute(
+                "INSERT INTO ITEMS_TYPES (item_id, type_id) VALUES (?, ?)",
+                (item_id, type["id"]))
+
         self.connection.commit()
         
 
