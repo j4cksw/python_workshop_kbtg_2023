@@ -1,6 +1,7 @@
 from pprint import pprint
 from flask import Flask, request
 from exclude_vat import exclude_vat
+from repository import ItemsRepository
 
 app = Flask(__name__)
 
@@ -8,18 +9,18 @@ app = Flask(__name__)
 def hello_world():
     return "Hello world"
 
-item_list = []
+item_reposotry = ItemsRepository()
 
 @app.route("/items", methods=["PUT"])
 def add_item():
-    item_list.append(request.json)
-    pprint(item_list)
+    item_reposotry.add_item(request.json)
+    pprint(item_reposotry.get_all_items())
     return "", 201
 
 @app.route("/vat")
 def get_vat_list():
     whitelist = { "book" }
-    return exclude_vat(item_list, whitelist)
+    return exclude_vat(item_reposotry.get_all_items(), whitelist)
 
 
 
